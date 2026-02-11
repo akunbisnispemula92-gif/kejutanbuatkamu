@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sebuah Kejujuran</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808;
+            --card-bg: #121212;
+            --accent: #ff2d55;
+            --text: #d1d1d1;
+            --gold: #bfa100;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container { width: 85%; max-width: 450px; z-index: 10; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            padding: 35px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+        }
+
+        .page { display: none; animation: fadeIn 1s ease forwards; }
+        .active { display: block; }
+
+        h2 { font-family: 'Playfair Display', serif; color: var(--gold); font-style: italic; }
+
+        .pesan { line-height: 1.7; font-size: 0.95rem; text-align: justify; margin-bottom: 25px; }
+        
+        .pantun {
+            background: #1a1a1a;
+            padding: 15px;
+            border-left: 3px solid var(--gold);
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        button {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid #444;
+            padding: 10px 20px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        button:hover { background: var(--gold); color: black; border-color: var(--gold); }
+
+        #timer {
+            font-size: 4rem;
+            color: var(--accent);
+            display: none;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Floating Glow */
+        .glow {
+            position: absolute;
+            width: 200px; height: 200px;
+            background: var(--accent);
+            filter: blur(150px);
+            opacity: 0.1;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow" style="top: 10%; left: 10%;"></div>
+    <div class="glow" style="bottom: 10%; right: 10%;"></div>
+
+    <div class="container">
+        <div class="card">
+            
+            <div id="p1" class="page active">
+                <h2>Maaf ya...</h2>
+                <div class="pesan">
+                    Mungkin selama ini aku kelihatan cuek. Mungkin aku bukan tipe orang yang bisa setiap jam nge-chat kamu atau nanyain kabar kamu terus-menerus. Aku sadar aku sering diam, tapi bukan berarti aku nggak peduli. Justru dalam diam itu, aku sering merhatiin kamu dari jauh.
+                </div>
+                <button onclick="nextPage('p2')">Lanjut</button>
+            </div>
+
+            <div id="p2" class="page">
+                <h2>Bukannya Gak Mau</h2>
+                <div class="pesan">
+                    Kadang aku bingung mau mulai obrolan dari mana. Aku takut ganggu waktu kamu, atau takut kamu risih kalau aku terlalu sering muncul. Tapi jujur, setiap kali ada notifikasi dari kamu, itu adalah momen paling bikin aku seneng seharian, meskipun aku cuma bales singkat.
+                </div>
+                <button onclick="nextPage('p3')">Sebenarnya...</button>
+            </div>
+
+            <div id="p3" class="page">
+                <h2>Satu Hal Kecil</h2>
+                <div class="pantun">
+                    "Beli kelapa di pasar lama,<br>
+                    Disimpan rapat di dalam peti.<br>
+                    Walau chat kita jarang bersama,<br>
+                    Namamu s'lalu ada di hati."
+                </div>
+                <p>Aku punya sesuatu yang mau aku kasih tau...</p>
+                <button onclick="startTimer()">Klik Ini</button>
+            </div>
+
+            <div id="timer">3</div>
+
+            <div id="final" class="page">
+                <h2 style="color: var(--accent);">Be Mine?</h2>
+                <div class="pesan" style="text-align: center;">
+                    Aku nggak pinter ngerangkai kata, tapi aku serius. Aku pengen kita lebih dari sekadar "temen yang jarang chat". Aku mau ada di samping kamu buat seterusnya. <br><br>
+                    <strong>Kamu mau nggak jadi pacar aku?</strong>
+                </div>
+                <p style="color: var(--gold);">❤️ ✨ ❤️</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function nextPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function startTimer() {
+            document.getElementById('p3').classList.remove('active');
+            const timer = document.getElementById('timer');
+            timer.style.display = 'block';
+
+            let count = 3;
+            const run = setInterval(() => {
+                count--;
+                timer.innerText = count;
+                if (count <= 0) {
+                    clearInterval(run);
+                    timer.style.display = 'none';
+                    document.getElementById('final').classList.add('active');
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
